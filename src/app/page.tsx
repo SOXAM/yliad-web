@@ -3,7 +3,9 @@
 export default function Home() {
   return (
     <>
-      Hello World!
+      <main className="flex min-h-screen flex-col p-6">
+        Hello World!
+      </main>
     </>
   );
 }
