@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./ui/globals.css";
-import "./ui/layout.css";
 
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -19,17 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className={inter.className}>
-        <div className="container">
-          <Header/>
-          <div className="main">
-            <Sidebar/>
-            <div className="content">
-              {children}
-            </div>
-          </div>
-        </div>
+    <html className="h-full bg-gray-100">
+      <body className="h-full">
+        <Header/>
+        {children}
       </body>
     </html>
   );
