@@ -1,4 +1,5 @@
 import { Layout, theme } from "antd";
+import MyCalendar from "./Calendar";
 
 const { Content } = Layout;
 
@@ -19,6 +20,7 @@ export default function MyHome() {
           }}
         >
           Hello yliad!
+          <MyCalendar />
         </div>
       </Content>
     </Layout>
