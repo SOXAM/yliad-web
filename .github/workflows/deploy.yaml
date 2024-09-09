@@ -28,7 +28,7 @@ jobs:
       - name: Run build
         run: npm run build
       - name: create deploy.zip
-        run: zip -r deploy.zip .
+        run: zip -r --symlinks -r deploy.zip .
 
       # Deploy
       - name: deploy to EB
