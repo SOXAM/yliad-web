@@ -1,0 +1,13 @@
+{
+  "diary": "Diary",
+  "new diary": "New Diary",
+  "title": "Title",
+  "contents": "Contents",
+  "save": "Save",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "create diary cancel": "Cancel",
+  "create diary cancel ask": "Do you want to cancel writing new diary?",
+  "attachment": "Attachment",
+  "upload": "Upload"
+}
