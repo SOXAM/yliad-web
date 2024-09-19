@@ -17,6 +17,7 @@ const MyCreateDiary = () => {
   };
 
   const uploadForm = async () => {
+    console.log(form.getFieldInstance("attachments"));
     await axios({
       method: "post",
       url: "http://localhost:8080/daily",

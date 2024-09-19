@@ -13,5 +13,11 @@
   "edit diary": "다이어리 수정",
   "modified date": "마지막 수정시각",
   "diary list": "다이어리 목록",
-  "edit": "수정"
+  "edit": "수정",
+  "delete": "삭제",
+  "delete diary": "다이어리 삭제",
+  "confirm delete diary": "정말 다이어리를 삭제하시겠습니까?",
+  "delete diary success": "다이어리가 삭제되었습니다",
+  "will navigate to diary list after seconds": "{{seconds}}초 후 다이어리 목록으로 이동합니다",
+  "move": "이동"
 }
