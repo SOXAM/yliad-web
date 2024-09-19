@@ -13,5 +13,11 @@
   "edit diary": "Edit Diary",
   "modified date": "Last Modified",
   "diary list": "Diary List",
-  "edit": "Edit"
+  "edit": "Edit",
+  "delete": "Delete",
+  "delete diary": "Delete Diary",
+  "confirm delete diary": "Are you sure you want to delete diary?",
+  "delete diary success": "Diary has been deleted successfully",
+  "will navigate to diary list after seconds": "Moving to diary list within {{seconds}} seconds",
+  "move": "Move"
 }

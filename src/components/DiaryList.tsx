@@ -83,62 +83,59 @@ export default function MyDiaryList() {
   return (
     <Layout>
       <Content style={{ padding: "0 48px" }}>
-        <Layout style={{ padding: "0 24px 24px" }}>
-          <div className="flex items-stretch" style={{ margin: "16px 0" }}>
-            <Breadcrumb className="text-xl">
-              <Breadcrumb.Item>{t("diary")}</Breadcrumb.Item>
-            </Breadcrumb>
-            <div className="flex-auto" />
-            <Button type="primary">
-              <Link to="./create">{t("new diary")}</Link>
-            </Button>
-          </div>
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
+        <div className="flex items-stretch" style={{ margin: "16px 0" }}>
+          <Breadcrumb className="text-xl" items={[{ title: t("diary") }]} />
+          <div className="flex-auto" />
+          {/* TODO: 페이지 길이 일정 이상일 때에만 활성화 */}
+          <Button type="primary">
+            <Link to="./create">{t("new diary")}</Link>
+          </Button>
+        </div>
+        <Content
+          style={{
+            padding: 24,
+            margin: 0,
+            minHeight: 280,
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
+          }}
+        >
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              onChange: (page) => {
+                console.log(page);
+              },
+              pageSize: 4,
+              align: "center",
             }}
-          >
-            <List
-              itemLayout="vertical"
-              size="large"
-              pagination={{
-                onChange: (page) => {
-                  console.log(page);
-                },
-                pageSize: 4,
-                align: "center",
-              }}
-              dataSource={diarys}
-              renderItem={(item) => (
-                <List.Item
-                  key={item?.id}
-                  extra={
-                    <Link to={`./${item.id}`}>
-                      <img
-                        width={272}
-                        alt="logo"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                      />
-                    </Link>
-                  }
-                >
+            dataSource={diarys}
+            renderItem={(item) => (
+              <List.Item
+                key={item?.id}
+                extra={
                   <Link to={`./${item.id}`}>
-                    <div>{item.title}</div>
-                    <div>{item.content}</div>
-                    <div>{moment(item.modifiedTime).calendar()}</div>
+                    <img
+                      width={272}
+                      alt="logo"
+                      src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                    />
                   </Link>
-                </List.Item>
-              )}
-            />
-            <Button type="primary">
-              <Link to="./create">{t("new diary")}</Link>
-            </Button>
-          </Content>
-        </Layout>
+                }
+              >
+                <Link to={`./${item.id}`}>
+                  <div>{item.title}</div>
+                  <div>{item.content}</div>
+                  <div>{moment(item.modifiedTime).calendar()}</div>
+                </Link>
+              </List.Item>
+            )}
+          />
+          <Button type="primary">
+            <Link to="./create">{t("new diary")}</Link>
+          </Button>
+        </Content>
       </Content>
     </Layout>
   );
