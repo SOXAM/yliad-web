@@ -9,5 +9,9 @@
   "create diary cancel": "Cancel",
   "create diary cancel ask": "Do you want to cancel writing new diary?",
   "attachment": "Attachment",
-  "upload": "Upload"
+  "upload": "Upload",
+  "edit diary": "Edit Diary",
+  "modified date": "Last Modified",
+  "diary list": "Diary List",
+  "edit": "Edit"
 }

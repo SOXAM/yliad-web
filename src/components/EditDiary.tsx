@@ -1,13 +1,25 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Flex, Form, Input, Popconfirm, Upload } from "antd";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { diaryData } from "../common/types";
 
-const MyCreateDiary = () => {
+const defaultData = {
+  id: 1,
+  title: "ISA",
+  url: null,
+  content: "I love isa...",
+  createTime: new Date("2024-09-19T09:43:45.018513"),
+  modifiedTime: new Date("2024-09-19T09:43:45.018525"),
+};
+
+const MyEditDiary = () => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [diary, setDiary] = useState<diaryData>(defaultData);
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -30,6 +42,20 @@ const MyCreateDiary = () => {
       });
   };
 
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:8080/daily/${diary.id}`,
+    })
+      .then((res) => {
+        setDiary(res.data);
+        console.log(diary);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
     <Form
       form={form}
@@ -38,11 +64,20 @@ const MyCreateDiary = () => {
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
     >
-      <Form.Item name="title" label={t("title")} rules={[{ required: true }]}>
+      <Form.Item
+        name="title"
+        label={t("title")}
+        rules={[{ required: true }]}
+        initialValue={diary.title}
+      >
         <Input />
       </Form.Item>
 
-      <Form.Item name="contents" label={t("contents")}>
+      <Form.Item
+        name="contents"
+        label={t("contents")}
+        initialValue={diary.content}
+      >
         <Input.TextArea rows={16} />
       </Form.Item>
 
@@ -83,4 +118,4 @@ const MyCreateDiary = () => {
   );
 };
 
-export default MyCreateDiary;
+export default MyEditDiary;

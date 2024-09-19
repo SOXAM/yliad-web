@@ -1,94 +1,112 @@
-import { Layout, Button, List, Avatar, Space, PaginationProps } from "antd";
-import { Link } from "react-router-dom";
+import { Breadcrumb, Button, Form, Layout, Space, theme } from "antd";
+import { Content, Footer } from "antd/es/layout/layout";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { createElement, useState } from "react";
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { diaryData } from "../common/types";
 
-const { Content } = Layout;
+const defaultData = {
+  id: 1,
+  title: "ISA",
+  url: null,
+  content: "I love isa...",
+  createTime: new Date("2024-09-19T09:43:45.018513"),
+  modifiedTime: new Date("2024-09-19T09:43:45.018525"),
+};
 
-const data = Array.from({ length: 23 }).map((_, i) => ({
-  href: "https://ant.design",
-  title: `ant design part ${i}`,
-  avatar: `https://api.dicebear.com/7.x/miniavs/svg?seed=${i}`,
-  description:
-    "Ant Design, a design language for background applications, is refined by Ant UED Team.",
-  content:
-    "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-}));
-
-const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
-  <Space>
-    {createElement(icon)}
-    {text}
-  </Space>
-);
-
-export default function MyDiary() {
+const MyDiary = () => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+  const { id } = useParams();
   const { t } = useTranslation();
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [diary, setDiary] = useState<diaryData>(defaultData);
 
-  const [current, setCurrent] = useState(3);
-
-  const onChange: PaginationProps["onChange"] = (page) => {
-    console.log(page);
-    setCurrent(page);
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
   };
+
+  const uploadForm = async () => {
+    await axios({
+      method: "post",
+      url: "http://localhost:8080/daily",
+      data: form,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:8080/daily/${id}`,
+    })
+      .then((res) => {
+        setDiary(res.data);
+        console.log(diary);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
     <Layout>
       <Content style={{ padding: "0 48px" }}>
-        <List
-          itemLayout="vertical"
-          size="large"
-          pagination={{
-            onChange: (page) => {
-              console.log(page);
-            },
-            pageSize: 3,
-            align: "center",
-          }}
-          dataSource={data}
-          renderItem={(item) => (
-            <Link to={"/"}>
-              <List.Item
-                key={item.title}
-                actions={[
-                  <IconText
-                    icon={StarOutlined}
-                    text="156"
-                    key="list-vertical-star-o"
-                  />,
-                  <IconText
-                    icon={LikeOutlined}
-                    text="156"
-                    key="list-vertical-like-o"
-                  />,
-                  <IconText
-                    icon={MessageOutlined}
-                    text="2"
-                    key="list-vertical-message"
-                  />,
-                ]}
-                extra={
-                  <img
-                    width={272}
-                    alt="logo"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                  />
-                }
-              >
-                <List.Item.Meta
-                  avatar={<Avatar src={item.avatar} />}
-                  title={item.title}
-                  description={item.description}
-                />
-                {item.content}
-              </List.Item>
-            </Link>
-          )}
-        />
-        <Button type="primary">
-          <Link to="./create">{t("new diary")}</Link>
-        </Button>
+        <Layout style={{ padding: "0 24px 24px" }}>
+          <div className="flex items-stretch" style={{ margin: "16px 0" }}>
+            <Breadcrumb className="text-xl">
+              <Breadcrumb.Item>
+                <Link to={"/diary"}>{t("diary")}</Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>{id}</Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="flex-auto"></div>
+            <Button
+              className="flex self-end"
+              style={{ width: "max-content" }}
+              type="primary"
+            >
+              <Link to="./create">{t("edit")}</Link>
+            </Button>
+          </div>
+          <Content
+            className="flex flex-col"
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+            <Space
+              direction="vertical"
+              size="middle"
+              style={{ display: "flex" }}
+            >
+              <div>{diary.title}</div>
+              <div>{diary?.content}</div>
+            </Space>
+            <div className="flex-auto" />
+            <Button style={{ width: "max-content" }} type="primary">
+              <Link to={`/diary/edit/${diary.id}`}>{t("edit")}</Link>
+            </Button>
+          </Content>
+        </Layout>
       </Content>
     </Layout>
   );
-}
+};
+
+export default MyDiary;
