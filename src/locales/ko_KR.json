@@ -1,0 +1,17 @@
+{
+  "diary": "다이어리",
+  "new diary": "새 다이어리",
+  "title": "제목",
+  "contents": "내용",
+  "save": "저장",
+  "confirm": "확인",
+  "cancel": "취소",
+  "create diary cancel": "다이어리 작성 취소",
+  "create diary cancel ask": "다이어리 작성을 취소하시겠습니까?",
+  "attachment": "파일 첨부",
+  "upload": "업로드",
+  "edit diary": "다이어리 수정",
+  "modified date": "마지막 수정시각",
+  "diary list": "다이어리 목록",
+  "edit": "수정"
+}
